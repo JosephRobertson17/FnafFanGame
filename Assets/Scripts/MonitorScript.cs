@@ -4,11 +4,14 @@ using UnityEngine;
 
 public class MonitorScript : MonoBehaviour
 {
-    float rotationDirection = 1f;
+    public float rotationDirection = 1f;
     public float rotationSpeed = 40f;
     float currentRotation;
     public float maximum_Y_value;
     public float minimum_Y_value;
+    bool cameraActive;
+
+    public CameraController cameraController;
 
     // Update is called once per frame
     void Update()
@@ -26,6 +29,15 @@ public class MonitorScript : MonoBehaviour
         }
         else if(rotationDirection > 0 && currentRotation < maximum_Y_value) {
             transform.rotation = Quaternion.Euler(transform.localRotation.eulerAngles.x, transform.localRotation.eulerAngles.y + rotationSpeed*Time.deltaTime*rotationDirection, 0);
+        }
+
+        if(rotationDirection < 0 && currentRotation <= minimum_Y_value && !cameraActive) {
+            cameraController.switchCamera(cameraController.getLastSecurityCamera());
+            cameraActive = true;
+        }
+        else if(rotationDirection > 0) {
+            cameraController.switchCamera(0);
+            cameraActive = false;
         }
     }
 
