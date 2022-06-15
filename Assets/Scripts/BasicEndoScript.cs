@@ -13,11 +13,7 @@ public class BasicEndoScript : MonoBehaviour {
     public float delayMin = 10f; // Minimum delay in seconds between movements
     float delay; // Current time in seconds until next movement
 
-    public int currentNode = 0; // What is the node the animatronic is currently at
-    public float startingX; // Starting X position of the animatronic
-    public float startingY; // Starting Y position of the animatronic
-    public float startingZ; // Starting Z position of the animatronic
-
+    public int nextNode = 0; // The next node the animatronic will move to
 
     void Start() {
         delay = Random.Range(delayMin, delayMax + 1); // Set the delay for the animatronics first move
@@ -26,22 +22,20 @@ public class BasicEndoScript : MonoBehaviour {
     void FixedUpdate() {
         if(delay <= 0) { // Check to see if the animatronic should move again
             delay = Random.Range(delayMin, delayMax + 1); // Set the delay for the next move
-            if(currentNode < nodes.Length - 1) { // Check to see if the animatronic is at the final node
-                currentNode++; // Sets its current target node
+            if(nextNode < nodes.Length) { // Check to see if the animatronic is at the final node
+                transform.position = new Vector3(nodes[nextNode].position.x, nodes[nextNode].position.y, nodes[nextNode].position.z); // Moves to the next node
+                transform.rotation = Quaternion.Euler(nodes[nextNode].eulerAngles.x, nodes[nextNode].eulerAngles.y, nodes[nextNode].eulerAngles.z); // Changes rotation to match the next node
+                nextNode++; // Sets its current target node
             }
             else { // Resets the animatronic back to where it started if it is at the final node
-                currentNode = 0;
+                nextNode = 0;
                 delay = Random.Range(delayMin, delayMax + 1);
-                transform.position = new Vector3(startingX, startingY, startingZ);
+                transform.position = new Vector3(nodes[0].position.x, nodes[0].position.y, nodes[0].position.z); // Resets the animatronic back to its start position
+                transform.rotation = Quaternion.Euler(nodes[0].eulerAngles.x, nodes[0].eulerAngles.y, nodes[0].eulerAngles.z); // Resets the animatronic to its start rotation
             }
         }
         else if(delay > 0) { // Controlles the count down on moves
             delay -= 0.02f; 
         }
-    }
-
-
-    void Update() {
-
     }
 }

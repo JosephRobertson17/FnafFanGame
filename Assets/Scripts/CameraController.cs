@@ -26,7 +26,7 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    public async void switchCamera(int nextCamera) {
+    public void switchCamera(int nextCamera) {
         // Checks if the player currenty is on the security cameras and is putting them away
         if(nextCamera == 0 && currentCamera != 0) {
             lastSecurityCamera = currentCamera; // Sets the last security camera the player was looking at
