@@ -13,7 +13,7 @@ public class MonitorScript : MonoBehaviour
     float currentRotation; // The current rotation of the monitor
     public float maximum_Y_value; // The maximum rotation of the monitor
     public float minimum_Y_value; // The minimum rotation of the monitor
-    bool cameraActive; // Is the the security camera system active
+    public bool cameraActive; // Is the the security camera system active
 
     public CameraController cameraController;
 

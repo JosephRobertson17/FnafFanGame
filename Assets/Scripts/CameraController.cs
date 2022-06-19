@@ -15,13 +15,14 @@ public class CameraController : MonoBehaviour
     public int currentCamera; // What camera in the cameras array the player is currently looking at
     public int lastSecurityCamera; // The last security camera the player was on
     public bool exitedOnTasks; // Did the player put the camera away while on tasks
+    public GameObject[] doorButton; // An array for the buttons that conrtol the doors
 
     void Start() {
         currentCamera = 0; // Sets the current camera to the players main pov
         lastSecurityCamera = 1; // Sets a start value for the security cameras
         exitedOnTasks = false; // Sets a default value for exitedOnTasks so the player enters on the security cameras the firts time they open the side panel
         // Disables all buttons for the security camera screen
-        for(int i = 0; i < 5; i++) {
+        for(int i = 0; i < 11; i++) {
             cameraButton[i].SetActive(false);
         }
     }
@@ -43,15 +44,20 @@ public class CameraController : MonoBehaviour
         // Checks it the player is on the main pov or the tasks menu
         if(currentCamera == 0 || currentCamera >= 20){
             // Disables all security camera buttons
-            for(int i = 0; i < 5; i++) {
+            for(int i = 0; i < 11; i++) {
                 cameraButton[i].SetActive(false);
             }
+
+            doorButton[0].SetActive(true);
+            doorButton[1].SetActive(true);
         }
         else {
             // Enables the security camera buttons if the player is looking at the securtiy cameras
-            for(int i = 0; i < 5; i++) {
+            for(int i = 0; i < 11; i++) {
                 cameraButton[i].SetActive(true);
             }
+            doorButton[0].SetActive(false);
+            doorButton[1].SetActive(false);
         }
     }
 
