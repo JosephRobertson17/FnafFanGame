@@ -24,6 +24,9 @@ public class DoorScript : MonoBehaviour
             // Opens the door
             transform.position = new Vector3(transform.position.x, transform.position.y + doorSpeed * Time.deltaTime, transform.position.z);
         }
+        else if(doorIsClosed && transform.position.y < minYValue) {
+            transform.position = new Vector3(transform.position.x, minYValue, transform.position.z);
+        }
     }
 
     // Switches the door from open to closed and from closed to open
