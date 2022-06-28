@@ -13,13 +13,10 @@ public class FlashLightScript : MonoBehaviour {
     public float rotationSpeed; // The rotation speed of the flashlight
     public float minimum_Y_value; // The farthest to the left the flashlight can go
     public float maximum_Y_value; // The farthest to the right the flashlight can go
-    public float minimum_X_value;
-    public float maximum_X_value;
-    public float rotationDirection; // The direction the flashlight is currently rotating
-    public float currentYRotation; // The current direction the flashlight is facing
-    public float currentXRotation;
-    public float playerCurrentYRotation; // The current direction the player is facing
-    public float playerCurrentXRotation;
+    float rotationDirection; // The direction the flashlight is currently rotating
+    float currentYRotation; // The current direction the flashlight is facing
+    float playerCurrentYRotation; // The current direction the player is facing
+    float playerCurrentXRotation;
 
     void FixedUpdate() {
         // Changes the players rotation values from 0 - 360 to -180 - 180
@@ -50,7 +47,7 @@ public class FlashLightScript : MonoBehaviour {
         }
 
         // Turns the flashlight off if the player is not looking at one of the doors
-        if(playerCurrentYRotation > 15) {
+        if(playerCurrentYRotation > 15 || playerCurrentXRotation < -10) {
             GetComponent<Light>().enabled = false;
         }
         else {
@@ -69,14 +66,6 @@ public class FlashLightScript : MonoBehaviour {
             currentYRotation = transform.eulerAngles.y - 360f;
         }
 
-        if(transform.eulerAngles.x <= 180f)
-        {
-            currentXRotation = transform.eulerAngles.x;
-        }
-        else
-        {
-            currentXRotation = transform.eulerAngles.x - 360f;
-        }
 
         // Checks if the flashlight should be moving left and isn't at the minimum
         if(rotationDirection < 0 && currentYRotation > minimum_Y_value) {
@@ -95,21 +84,6 @@ public class FlashLightScript : MonoBehaviour {
             }
             else {
                 transform.rotation = Quaternion.Euler(transform.localRotation.eulerAngles.x, maximum_Y_value, transform.localRotation.eulerAngles.z);
-            }
-        }
-
-        if(playerCurrentXRotation < -10 && currentXRotation > minimum_X_value) {
-            transform.rotation = Quaternion.Euler(transform.localRotation.eulerAngles.x - rotationSpeed*Time.deltaTime,transform.localRotation.eulerAngles.y,transform.localRotation.eulerAngles.z);
-        }
-        else if(playerCurrentXRotation > -10 && currentXRotation < maximum_X_value) {
-            transform.rotation = Quaternion.Euler(transform.localRotation.eulerAngles.x + rotationSpeed*Time.deltaTime,transform.localRotation.eulerAngles.y,transform.localRotation.eulerAngles.z);
-        }
-        else {
-            if(playerCurrentXRotation < -10) {
-                transform.rotation = Quaternion.Euler(minimum_X_value,transform.localRotation.eulerAngles.y,transform.localRotation.eulerAngles.z);
-            }
-            else {
-                transform.rotation = Quaternion.Euler(maximum_X_value,transform.localRotation.eulerAngles.y,transform.localRotation.eulerAngles.z);
             }
         }
     }
